@@ -18,22 +18,22 @@ namespace aula14032024
 
         public void adicionarItems(Item item)
         {
-            if (items.Contains(item))
-            {   
-                foreach(Item i in items)
-                {   
-                    if(i.produto == item.produto)
-                    {
+            bool itemExistente = items.Any(it => it.produto.nome == item.produto.nome);
+            if (itemExistente){
+                foreach (Item i in items){
+                    if (i.produto.nome == item.produto.nome){
                         i.quantidade += item.quantidade;
-                    }          
+                        valorTotal += item.valor * item.quantidade;
+                        return;
+                    }
                 }
             }
             else
             {
                 items.Add(item);
-                valorTotal += item.valor;
-            }           
-        }      
+                valorTotal += item.valor * item.quantidade;
+            }
+        }            
         public void fazerPedido(Produto p, int quantidade, double desconto, double valor)
         {
             adicionarItems(new Item(p, quantidade, desconto, valor));
